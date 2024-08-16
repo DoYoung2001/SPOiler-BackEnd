@@ -1,9 +1,12 @@
 package SPOilerBackend.user;
 
+import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
+@RequestMapping("/api/users")
 @RestController
 public class UserController {
 
@@ -13,8 +16,19 @@ public class UserController {
         this.userService = userService;
     }
 
+    //로그인
     @PostMapping("/login")
     public LoginResponse login(@RequestBody LoginRequest request){
         return userService.login(request);
     }
+
+    //로그아웃
+    @PostMapping("/logout")
+    public ResponseEntity<String> logout() {
+        // 로그아웃 처리 로직 추가
+        userService.logout();
+        return ResponseEntity.ok("로그아웃 성공");
+    }
+
+
 }

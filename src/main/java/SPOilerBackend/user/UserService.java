@@ -38,5 +38,8 @@ public class UserService {
         return jwtProvider.createToken(user.getEmail());
     }
 
+    public void logout() {
+
+    }
 }
 
