@@ -1,6 +1,7 @@
 package SPOilerBackend.user;
 
 import SPOilerBackend.Login.JwtProvider;
+import SPOilerBackend.Login.SecurityUtils;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -17,10 +18,12 @@ public class UserService {
     // 회원가입
     public RegisterResponseDto register(RegisterRequestDto request) {
 
-        User user = new User(request.email(), request.password());
-
+        User user = new User(
+                request.email(),
+                SecurityUtils.sha256Encrypt(request.password()
+                )
+        );
         User userSave = userRepository.save(user);
-
         return new RegisterResponseDto(
                 userSave.getEmail(),
                 userSave.getPassword()

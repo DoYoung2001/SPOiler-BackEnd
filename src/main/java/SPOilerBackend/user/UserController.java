@@ -33,8 +33,13 @@ public class UserController {
 
     // 로그인
     @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request){
-        return userService.login(request);
+    public ResponseEntity<LoginResponse> login(@RequestBody LoginRequest request){
+        try {
+            LoginResponse response = userService.login(request);
+            return ResponseEntity.ok(response); // 성공 시 200 OK 반환
+        } catch (IllegalArgumentException e) {
+            return ResponseEntity.status(HttpStatus.UNAUTHORIZED).body(new LoginResponse(e.getMessage())); // 에러 메시지 포함
+        }
     }
 
     //로그아웃
