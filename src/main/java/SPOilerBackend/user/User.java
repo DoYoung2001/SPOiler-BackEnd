@@ -1,5 +1,6 @@
 package SPOilerBackend.user;
 
+import SPOilerBackend.Login.SecurityUtils;
 import jakarta.persistence.*;
 
 @Entity
@@ -35,5 +36,10 @@ public class User {
     }
 
     protected User() {
+    }
+
+    public boolean compare(String password) {
+        String hashedPassword = SecurityUtils.sha256Encrypt(password);
+        return this.password.equals(hashedPassword);
     }
 }
