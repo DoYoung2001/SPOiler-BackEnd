@@ -14,12 +14,26 @@ public class UserService {
         this.jwtProvider = jwtProvider;
     }
 
+    // 회원가입
+    public RegisterResponseDto register(RegisterRequestDto request) {
+
+        User user = new User(request.email(), request.password());
+
+        User userSave = userRepository.save(user);
+
+        return new RegisterResponseDto(
+                userSave.getEmail(),
+                userSave.getPassword()
+        );
+    }
+
     // 로그인
     public LoginResponse login(LoginRequest request) {
         User user = checkEmailPassword(request);
         String token = generateToken(user);
         return new LoginResponse(token);
     }
+
 
     //email password 체크
     private User checkEmailPassword(LoginRequest request) {
@@ -37,6 +51,5 @@ public class UserService {
     public String generateToken(User user) {
         return jwtProvider.createToken(user.getEmail());
     }
-
 }
 
