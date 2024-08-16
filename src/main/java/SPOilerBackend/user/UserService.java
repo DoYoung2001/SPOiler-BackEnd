@@ -34,7 +34,6 @@ public class UserService {
         return new LoginResponse(token);
     }
 
-
     //email password 체크
     private User checkEmailPassword(LoginRequest request) {
         // email 검증
@@ -50,6 +49,10 @@ public class UserService {
     // 토큰 발급
     public String generateToken(User user) {
         return jwtProvider.createToken(user.getEmail());
+    }
+
+    public void logout() {
+
     }
 }
 
