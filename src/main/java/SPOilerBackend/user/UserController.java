@@ -1,10 +1,8 @@
 package SPOilerBackend.user;
 
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
+
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
@@ -16,10 +14,6 @@ public class UserController {
         this.userService = userService;
     }
 
-    @PostMapping("/login")
-    public LoginResponse login(@RequestBody LoginRequest request){
-        return userService.login(request);
-    }
     // 회원 가입
     @PostMapping("/join")
     public RegisterResponseDto register(@RequestBody RegisterRequestDto request) {
@@ -27,5 +21,12 @@ public class UserController {
         return userService.register(request);
 
     }
+
+    // 로그인
+    @PostMapping("/login")
+    public LoginResponse login(@RequestBody LoginRequest request){
+        return userService.login(request);
+    }
+
 
 }
