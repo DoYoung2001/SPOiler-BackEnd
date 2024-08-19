@@ -34,6 +34,7 @@ public class UserService {
     public LoginResponse login(LoginRequest request) {
         User user = checkEmailPassword(request);
         String token = generateToken(user);
+        System.out.println("token = " + token);
         return new LoginResponse(token);
     }
 
@@ -58,4 +59,3 @@ public class UserService {
 
     }
 }
-

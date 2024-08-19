@@ -10,9 +10,9 @@ public class TrackList {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    private Long spotifyId;
+    private String spotifyId;
 
-    private String trackName;
+//    private String trackName;
 
     @ManyToOne
     private User user;
@@ -23,22 +23,17 @@ public class TrackList {
         return id;
     }
 
-    public Long getSpotifyId() {
+    public String getSpotifyId() {
         return spotifyId;
     }
-
-    public String getTrackName() {
-        return trackName;
-    }
-
+    
     public User getUser() {
         return user;
     }
 
-    public TrackList(Long spotifyId, String trackName, User user) {
-        this.spotifyId = spotifyId;
-        this.trackName = trackName;
+    public TrackList(User user, String spotifyId) {
         this.user = user;
+        this.spotifyId = spotifyId;
     }
 
     protected TrackList() {
