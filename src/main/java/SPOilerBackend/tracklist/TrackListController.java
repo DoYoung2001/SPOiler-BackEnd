@@ -44,9 +44,9 @@ public class TrackListController {
 	
 	// 특정 사용자의 트랙리스트 조회
 	@GetMapping
-	public ResponseEntity<List<TrackList>> getTracksByUserId(@RequestParam Long userId) {
+	public ResponseEntity<List<TrackList>> getTracksByUserId(@LoginUser User user) {
 		try {
-			List<TrackList> trackList = trackListService.getTracksByUserId(userId);
+			List<TrackList> trackList = trackListService.getTracksByUserId(user.getId());
 			return ResponseEntity.ok(trackList);
 		} catch (Exception e) {
 			logger.error("Error fetching tracks: ", e);
@@ -56,9 +56,9 @@ public class TrackListController {
 	
 	// 트랙리스트에서 트랙 삭제
 	@DeleteMapping("/{spotifyId}")
-	public ResponseEntity<String> deleteTrack(@PathVariable Long spotifyId) {
+	public ResponseEntity<String> deleteTrack(@LoginUser User user, @PathVariable String spotifyId) {
 		try {
-			boolean deleted = trackListService.deleteTrack(spotifyId);
+			boolean deleted = trackListService.deleteTrack(user,spotifyId);
 			if (deleted) {
 				return ResponseEntity.ok("트랙이 성공적으로 삭제되었습니다.");
 			} else {
@@ -68,4 +68,17 @@ public class TrackListController {
 			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("트랙 삭제 중 오류가 발생했습니다.");
 		}
 	}
+
+	// 트랙리스트에서 모든 트랙 삭제
+	@DeleteMapping("/clear")
+	public ResponseEntity<String> clearAllTracks(@LoginUser User user){
+		try {
+			trackListService.deleteAllTracks(user);
+			return ResponseEntity.ok("모든 트랙이 성공적으로 삭제되었습니다.");
+		} catch (Exception e) {
+			logger.error("Error clearing all tracks: ", e);
+			return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body("모든 트랙 삭제 중 오류가 발생했습니다.");
+		}
+	}
+
 }

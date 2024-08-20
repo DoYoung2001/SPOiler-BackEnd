@@ -12,8 +12,6 @@ public class TrackList {
 
     private String spotifyId;
 
-//    private String trackName;
-
     @ManyToOne
     private User user;
 
