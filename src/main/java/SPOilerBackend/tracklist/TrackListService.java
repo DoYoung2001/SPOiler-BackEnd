@@ -38,16 +38,12 @@ public class TrackListService {
 	// 트랙리스트에서 트랙 삭제
 	@Transactional
 	public boolean deleteTrack(User user, String spotifyId) {
-		// 사용자 ID와 트랙 ID로 트랙을 조회
-		Optional<TrackList> trackOptional = trackListRepository.findBySpotifyIdAndUserId(spotifyId, user.getId());
-
-		if (trackOptional.isPresent()) {
-			// 트랙이 존재하면 삭제
-			trackListRepository.delete(trackOptional.get());
+		if (trackListRepository.existsBySpotifyIdAndUserId(spotifyId, user.getId())) {
+			trackListRepository.deleteBySpotifyIdAndUserId(spotifyId, user.getId());
 			return true;
 		}
-		// 트랙이 없거나 사용자가 소유하지 않는 트랙인 경우
 		return false;
+
 	}
 
 
